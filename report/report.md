@@ -8,7 +8,7 @@ by Bonzon Tiffany, Scherer Laurent, Thoeny Laurent
 
 ### Table of content
 
-
+### 
 
 ### Task 0: Identify issues and install the tools
 
@@ -22,7 +22,7 @@ At last, what could (and should) happen is that the newly created container take
 
 *[M3]* : A better approach would be to manage the containers dynamically, even if Haproxy doesn't kill or start any container based on the traffic, it still should be able to detect new containers and remove deleted one without any modification in his config.
 
-*[M4]* : The best approach would be for the server containing the `webapp` to announce themselves as a service and for the load balancer to be able to detect the service containers automatically. Another alternative would be to configure the server using an IP range and to assign the `webapp` containers to that range. 
+*[M4]* : The best approach would be for the server containing the `webapp` to announce themselves as a service and for the load balancer to be able to detect the service containers automatically, we used `Traefik` and its label system in another class to do such a task. Another alternative would be to configure the server using an IP range and to assign the `webapp` containers to that range. 
 
 *[M5]* : I don't think it'll be a problem to run a new service on our infrastructure, we can create a container with the service we want and either have that container contact the machines identified as `webapp` or add to the configuration of the containers configuration that they need to send their logs.
 
@@ -32,13 +32,15 @@ Alternatively we could consider implementing our new service on the load balance
 
 *[M6]* : todo
 
-
-
 ### 
 
 ### Task 1: Add a process supervisor to run several processes
 
 
+
+##### Describe your difficulties for this task and your understanding of what is happening during this task. Explain in your own words why are we installing a process supervisor. Do not hesitate to do more research and to find more articles on that topic to illustrate the problem.
+
+We haven't faced any difficulties during the copy-paste of lines from the lab instructions to either our terminal or config files.
 
 
 
