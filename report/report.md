@@ -36,7 +36,7 @@ Alternatively we could consider implementing our new service on the load balance
 
 ### Task 1: Add a process supervisor to run several processes
 
-
+![](img/task1.png)
 
 ##### Describe your difficulties for this task and your understanding of what is happening during this task. Explain in your own words why are we installing a process supervisor. Do not hesitate to do more research and to find more articles on that topic to illustrate the problem.
 
@@ -44,7 +44,9 @@ We haven't faced any difficulties during the copy-paste of lines from the lab in
 
 We are installing a process supervisor in order to overcome the difficulties of running multiple process in a single Docker container, those difficulties are not issued from our configuration but based on the way Docker was designed. We want to have more than one process running on our container so we make the supervisor the main process and we let him run the other services.
 
+### Task 2: Add a tool to manage membership in the web server cluster
 
+> 
 
 ### Difficulties
 
