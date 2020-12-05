@@ -46,7 +46,36 @@ We are installing a process supervisor in order to overcome the difficulties of 
 
 ### Task 2: Add a tool to manage membership in the web server cluster
 
-> 
+In order to copy the agent run script and make it executable, we added the following command in both our Dockerfiles (inspired by the way we handled ha).
+
+```
+# TODO: [Serf] Add Serf S6 setup
+COPY services/serf /etc/services.d/serf
+RUN chmod +x /etc/services.d/serf/run
+```
+
+Then we build the containers and verify their behavior through the browser and the logs, we see that the behavior is the one expected from the lab instructions where we get a failure to join the cluster at first, however we can see that the node then joined with the IP 192.168.42.42 (it's HA ip address) successfully.
+
+![](img/task2_failure.png)
+
+The next thing we did verify is to connect to s1 and to ping ha to verify if this behavior was indeed due to the name being properly resolved, it was.
+
+![](img/task2_ping.png)
+
+From this point the following indicated way to start the container was not implemented, since starting them with `docker-compose up --build` allowed us to have them connect properly.
+
+*Since my behavior is different, let me specify my Docker version : Docker version 19.03.13-ce, build 4484c46d9d and docker-compose version 1.27.4*
+
+
+##### Deliverables
+
+The logs at the end of the second task have been exported to the corresponding folder, logs export were done using `docker logs <container> >> file`.
+
+We haven't faced the problem where we need to start `s1` and `s2` before starting `ha`, however it's obviously a big problem if you need to link the containers that way, future containers wouldn't be able to reach `ha` because of the same problem. The easier solution is to allow the containers to resolve ha.
+
+The way `Serf` works is ..
+
+
 
 ### Difficulties
 
