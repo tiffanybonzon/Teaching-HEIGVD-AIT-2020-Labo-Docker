@@ -82,7 +82,31 @@ The fondamental difference between these approach is that the way we configure t
 
 ### Task 3: React to membership changes
 
+In order to copy the scripts we added the following commands in our Dockerfile.
 
+``` 
+# [Serf] Copy events handler scripts
+RUN mkdir -p /serf-handlers
+COPY scripts/member-join.sh /serf-handlers/member-join.sh
+COPY scripts/member-leave.sh /serf-handlers/member-leave.sh
+RUN chmod +x /serf-handlers/*
+```
+
+##### Deliverables
+
+We started the ha image only and saved the logs in the `haonly` file, after that we started `s1` and kept both logs in the files `s1started` and `haands1`.
+
+*"Once started, get the logs (keep the logs) of the backend container."* -> We just captured the logs from `s1` as it has just started so we're not sure if another one was needed but assumed it would be the same since we haven't changed anything from the last step.
+
+Below are the logs from the container running, they also were copied in the `logsinha` file.
+
+![](img/task3_logs.png)
+
+It asks for the logs of the three containers but we haven't started `s2` during the task. We assumed that "Now, run one of the two backend containers and capture the logs (keep the logs)." followed by both commands just meant we could choose which to start.
+
+The only difference is that the behavior of `s1` would have been duplicated as `s2` has the exact same image.
+
+### Task 4: Use a template engine to easily generate configuration files
 
 ### Difficulties
 
