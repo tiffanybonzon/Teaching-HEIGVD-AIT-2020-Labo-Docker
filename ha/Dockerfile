@@ -4,8 +4,7 @@ FROM haproxy:2.2
 LABEL Laurent Thoeny <laurent.thoeny@heig-vd.ch>
 
 # Install some tools
-# TODO: [HB] Update to install required tool to install NodeJS
-RUN apt-get update && apt-get -y install wget curl vim iputils-ping rsyslog
+RUN apt-get update && apt-get -y install wget curl vim iputils-ping rsyslog xz-utils
 
 # Download and install S6 overlay
 RUN curl -sSLo /tmp/s6.tar.gz https://github.com/just-containers/s6-overlay/releases/download/v2.1.0.2/s6-overlay-amd64.tar.gz \
@@ -19,9 +18,13 @@ RUN mkdir /opt/bin \
     && chmod 755 /opt/bin/serf \
     && rm -f /tmp/serf.gz
 
-# TODO: [HB] Install NodeJS
+# Install NodeJS
+RUN curl -sSLo /tmp/node.tar.xz https://nodejs.org/dist/v14.15.1/node-v14.15.1-linux-x64.tar.xz \
+  && tar -C /usr/local --strip-components 1 -xf /tmp/node.tar.xz \
+  && rm -f /tmp/node.tar.xz
 
-# TODO: [HB] Install Handlebars
+# Install the handlebars-cmd node module and its dependencies
+RUN npm install -g handlebars-cmd
 
 # Copy the S6 service and make the run script executable
 COPY services/ha /etc/services.d/ha
