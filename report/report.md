@@ -108,6 +108,44 @@ The only difference is that the behavior of `s1` would have been duplicated as `
 
 ### Task 4: Use a template engine to easily generate configuration files
 
+In order to copy the config in `/config` we added the following lines to our Dockerfile 
+
+```
+# TODO: [HB] Copy the haproxy configuration template
+RUN mkdir -p /config
+COPY config/haproxy.cfg.hb /config/haproxy.cfg.hb
+```
+
+Then we ran the containers and went to check the file `/tmp/haproxy.cfg`, the result is shown below and copy-pasted in the file `tmpconf` in the logs of this task. We notice there is only one line written.
+
+![](img/task4_logs.png)
+
+Now moving on to the end-to-end testing.
+
+After starting s1 : `Container 7f9f21fca48b has joined the Serf cluster with the following IP address: 192.168.42.2` then after starting s2 as well : `Container 7f04a57729fa has joined the Serf cluster with the following IP address: 192.168.42.3`.
+
+In the screenshot above we noticed there was only one line written despite both containers behind started, by this end-to-end step we have confirmed that the behavior is correct but only one line is written in the file at any time. If we wanted every connexion to be logged in the file we would have to modify the script `member-join.sh` and to use `>>` instead of `>` when writing the file in `/tmp`.
+
+##### Deliverables
+
+1. Mostly the difference between both method is the way the layers are used, if we happend `RUN ... install xz-utils` at the end of our Dockerfile then it would've been shoter to build the image, where our choice made us rebuild from the LAYER where the RUN command was executed. However our choice seems much cleaner when someone reads the Dockerfile and checks what's installed to the container via `apt`.
+
+We suggest using the command chaining version as long as the image isn't one that has to be modified a lot, it's much easier for people reading the Dockerfile.
+
+You can reduce the size of docker containers through flattining, that mostly involves creating an image of the container with each of your layer to reduce the space used. We won't go into details but a few of the possibilites are mentionned in (that cool post in the forums)[https://forums.docker.com/t/how-to-flatten-an-image-with-127-parents/1600/4]. Another quick recap about this (here)[https://l10nn.medium.com/flattening-docker-images-bafb849912ff].
+
+2. A different approach from ours would be to create a base image for both our containers and then 2 images from that common part. We would leave most of the installations and common parts in the base image, then `FROM` this base image create our two variants with the differences related to the webapp and the proxy. 
+
+While this approach seems a bit *overkill* for our needs, it's definitely a good thing in bigger architectures where multiple servers have a lot of common properties, but that mean you have to rebuild every subimage every time you make a change so be careful !
+
+3. Three files were created, the first one was mentionned earlier in the report and both other are named `afters1` and `afters2` to refer what they represent.
+
+Then 4 files named `dockerps`, `inspectha`, `inspects1` and `inspects2` were created with the additionnal logs required.
+
+4. We assume the problem you want us to refer is the one we described earlier about the fact that every time we write the file `/tmp/haproxy.cfg` it overrides its current content.
+
+### Task 5: Generate a new load balancer configuration when membership changes
+
 ### Difficulties
 
 ### Conclusion
