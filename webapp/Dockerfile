@@ -28,14 +28,15 @@ RUN mkdir /opt/bin \
 COPY services/node /etc/services.d/node
 RUN chmod +x /etc/services.d/node/run
 
-# TODO: [Serf] Add Serf S6 setup
+# [Serf] Add Serf S6 setup
 COPY services/serf /etc/services.d/serf
 RUN chmod +x /etc/services.d/serf/run
 
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# TODO: [Serf] Expose ports
+# [Serf] Expose ports
+EXPOSE 7946 7373
 
 # Expose the web application port
 EXPOSE 3000

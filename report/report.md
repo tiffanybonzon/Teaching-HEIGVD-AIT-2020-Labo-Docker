@@ -146,6 +146,8 @@ Then 4 files named `dockerps`, `inspectha`, `inspects1` and `inspects2` were cre
 
 ### Task 5: Generate a new load balancer configuration when membership changes
 
+We didn't find a `TODO: [CFG] Remove all the servers` comment in the haproxy.cfg file, but we commented the two servers declaration under the `backend nodes` category.
+
 ### Difficulties
 
 ### Conclusion
