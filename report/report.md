@@ -46,7 +46,7 @@ We are installing a process supervisor in order to overcome the difficulties of 
 
 ### Task 2: Add a tool to manage membership in the web server cluster
 
-In order to copy the agent run script and make it executable, we added the following command in both our Dockerfiles (inspired by the way we handled ha).
+In order to copy the agent run script and make it executable, we added the following command in both our Dockerfile (inspired by the way we handled ha).
 
 ```
 # TODO: [Serf] Add Serf S6 setup
@@ -58,7 +58,7 @@ Then we build the containers and verify their behavior through the browser and t
 
 ![](img/task2_failure.png)
 
-The next thing we did verify is to connect to s1 and to ping ha to verify if this behavior was indeed due to the name being properly resolved, it was.
+The next thing we did verify is to connect to `s1` and to ping ha to verify if this behavior was indeed due to the name being properly resolved, it was.
 
 ![](img/task2_ping.png)
 
@@ -76,9 +76,9 @@ We haven't faced the problem where we need to start `s1` and `s2` before startin
 The way `Serf` works is with a `gossip protocol`, it's a way to design the communication that has his name issued from the analogy of workers spreading rumors, everyone periodically talks to someone else randomly and the information therefore spreads. There is another analogy that calls such a communication scheme an `epidemic protocol`, as a parallel can be made between the way the information spread and a virus would spread
 (source)[https://en.wikipedia.org/wiki/Gossip_protocol].
 
-One of the other way for the discovery to happen on Docker is the way used by `Traefik` (already used as an example earlier), Traefik discovery uses an access to the Docker API to detect running containter and information on these containers to detect the services. In our case we would allow `ha` to use the Docker API and tell him that every container with a LABEL `backend` is a container running the webapp.
+One of the other way for the discovery to happen on Docker is the way used by `Traefik` (already used as an example earlier), `Traefik` discovery uses an access to the Docker API to detect running container and information on these containers to detect the services. In our case we would allow `ha` to use the Docker API and tell him that every container with a LABEL `backend` is a container running the `webapp`.
 
-The fondamental difference between these approach is that the way we configure the discovery from our proxy instance is not different from how we could do it with an infrastructure not based on Docker, where the method using `Docker API` is obviously based on using Docker.
+The fundamental difference between these approach is that the way we configure the discovery from our proxy instance is not different from how we could do it with an infrastructure not based on Docker, where the method using `Docker API` is obviously based on using Docker.
 
 ### Task 3: React to membership changes
 
@@ -96,13 +96,13 @@ RUN chmod +x /serf-handlers/*
 
 We started the ha image only and saved the logs in the `haonly` file, after that we started `s1` and kept both logs in the files `s1started` and `haands1`.
 
-*"Once started, get the logs (keep the logs) of the backend container."* -> We just captured the logs from `s1` as it has just started so we're not sure if another one was needed but assumed it would be the same since we haven't changed anything from the last step.
+*"Once started, get the logs (keep the logs) of the back-end container."* -> We just captured the logs from `s1` as it has just started so we're not sure if another one was needed but assumed it would be the same since we haven't changed anything from the last step.
 
 Below are the logs from the container running, they also were copied in the `logsinha` file.
 
 ![](img/task3_logs.png)
 
-It asks for the logs of the three containers but we haven't started `s2` during the task. We assumed that "Now, run one of the two backend containers and capture the logs (keep the logs)." followed by both commands just meant we could choose which to start.
+It asks for the logs of the three containers but we haven't started `s2` during the task. We assumed that "Now, run one of the two back-end containers and capture the logs (keep the logs)." followed by both commands just meant we could choose which to start.
 
 The only difference is that the behavior of `s1` would have been duplicated as `s2` has the exact same image.
 
@@ -128,21 +128,21 @@ In the screenshot above we noticed there was only one line written despite both 
 
 ##### Deliverables
 
-1. Mostly the difference between both method is the way the layers are used, if we happend `RUN ... install xz-utils` at the end of our Dockerfile then it would've been shoter to build the image, where our choice made us rebuild from the LAYER where the RUN command was executed. However our choice seems much cleaner when someone reads the Dockerfile and checks what's installed to the container via `apt`.
+1. Mostly the difference between both method is the way the layers are used, if we happened to `RUN ... install xz-utils` at the end of our Dockerfile then it would've been shorter to build the image, where our choice made us rebuild from the LAYER where the RUN command was executed. However our choice seems much cleaner when someone reads the Dockerfile and checks what's installed to the container via `apt`.
 
 We suggest using the command chaining version as long as the image isn't one that has to be modified a lot, it's much easier for people reading the Dockerfile.
 
-You can reduce the size of docker containers through flattining, that mostly involves creating an image of the container with each of your layer to reduce the space used. We won't go into details but a few of the possibilites are mentionned in (that cool post in the forums)[https://forums.docker.com/t/how-to-flatten-an-image-with-127-parents/1600/4]. Another quick recap about this (here)[https://l10nn.medium.com/flattening-docker-images-bafb849912ff].
+You can reduce the size of docker containers through flattening, that mostly involves creating an image of the container with each of your layer to reduce the space used. We won't go into details but a few of the possibilities are mentioned in (that cool post in the forums)[https://forums.docker.com/t/how-to-flatten-an-image-with-127-parents/1600/4]. Another quick recap about this (here)[https://l10nn.medium.com/flattening-docker-images-bafb849912ff].
 
 2. A different approach from ours would be to create a base image for both our containers and then 2 images from that common part. We would leave most of the installations and common parts in the base image, then `FROM` this base image create our two variants with the differences related to the webapp and the proxy. 
 
-While this approach seems a bit *overkill* for our needs, it's definitely a good thing in bigger architectures where multiple servers have a lot of common properties, but that mean you have to rebuild every subimage every time you make a change so be careful !
+While this approach seems a bit *overkill* for our needs, it's definitely a good thing in bigger architectures where multiple servers have a lot of common properties, but that mean you have to rebuild every sub-image every time you make a change so be careful !
 
-3. Three files were created, the first one was mentionned earlier in the report and both other are named `afters1` and `afters2` to refer what they represent.
+3. Three files were created, the first one was mentioned earlier in the report and both other are named `afters1` and `afters2` to refer what they represent.
 
-Then 4 files named `dockerps`, `inspectha`, `inspects1` and `inspects2` were created with the additionnal logs required.
+Then 4 files named `dockerps`, `inspectha`, `inspects1` and `inspects2` were created with the additional logs required.
 
-4. We ass   ume the problem you want us to refer is the one we described earlier about the fact that every time we write the file `/tmp/haproxy.cfg` it overrides its current content.
+4. We assume the problem you want us to refer is the one we described earlier about the fact that every time we write the file `/tmp/haproxy.cfg` it overrides its current content.
 
 ### Task 5: Generate a new load balancer configuration when membership changes
 
@@ -156,9 +156,11 @@ We didn't find a `TODO: [CFG] Remove all the servers` comment in the haproxy.cfg
 
 3. The files are `step3conf`, `2ndlsoutput` and `dockerps2`.
 
-4. We won't go into further details regarding another approach. We have however mentionned earlier in this report a few differences and taken the repeated example of Traefik, so that's the tool we would recommend with it's "labeling the containers" approach.
+4. We won't go into further details regarding another approach. We have however mentioned earlier in this report a few differences and taken the repeated example of `Traefik`, so that's the tool we would recommend with it's "labeling the containers" approach.
 
 ### Task 6: Make the load balancer automatically reload the new configuration
+
+
 
 ### Difficulties
 
