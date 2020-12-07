@@ -6,9 +6,11 @@ by Bonzon Tiffany, Scherer Laurent, Thoeny Laurent
 
 ### Introduction
 
-### Table of content
+### Table of contents
 
-### 
+[TOC]
+
+
 
 ### Task 0: Identify issues and install the tools
 
@@ -32,7 +34,7 @@ Alternatively we could consider implementing our new service on the load balance
 
 *[M6]* : todo
 
-### 
+
 
 ### Task 1: Add a process supervisor to run several processes
 
@@ -122,7 +124,7 @@ Then we ran the containers and went to check the file `/tmp/haproxy.cfg`, the re
 
 Now moving on to the end-to-end testing.
 
-After starting s1 : `Container 7f9f21fca48b has joined the Serf cluster with the following IP address: 192.168.42.2` then after starting s2 as well : `Container 7f04a57729fa has joined the Serf cluster with the following IP address: 192.168.42.3`.
+After starting `s1` : `Container 7f9f21fca48b has joined the Serf cluster with the following IP address: 192.168.42.2` then after starting `s2` as well : `Container 7f04a57729fa has joined the Serf cluster with the following IP address: 192.168.42.3`.
 
 In the screenshot above we noticed there was only one line written despite both containers behind started, by this end-to-end step we have confirmed that the behavior is correct but only one line is written in the file at any time. If we wanted every connexion to be logged in the file we would have to modify the script `member-join.sh` and to use `>>` instead of `>` when writing the file in `/tmp`.
 
@@ -132,9 +134,9 @@ In the screenshot above we noticed there was only one line written despite both 
 
 We suggest using the command chaining version as long as the image isn't one that has to be modified a lot, it's much easier for people reading the Dockerfile.
 
-You can reduce the size of docker containers through flattening, that mostly involves creating an image of the container with each of your layer to reduce the space used. We won't go into details but a few of the possibilities are mentioned in (that cool post in the forums)[https://forums.docker.com/t/how-to-flatten-an-image-with-127-parents/1600/4]. Another quick recap about this (here)[https://l10nn.medium.com/flattening-docker-images-bafb849912ff].
+You can reduce the size of docker containers through flattening, that mostly involves creating an image of the container with each of your layer to reduce the space used. We won't go into details but a few of the possibilities are mentioned in [that cool post in the forums](https://forums.docker.com/t/how-to-flatten-an-image-with-127-parents/1600/4). Another quick recap about this [here](https://l10nn.medium.com/flattening-docker-images-bafb849912ff).
 
-2. A different approach from ours would be to create a base image for both our containers and then 2 images from that common part. We would leave most of the installations and common parts in the base image, then `FROM` this base image create our two variants with the differences related to the webapp and the proxy. 
+2. A different approach from ours would be to create a base image for both our containers and then 2 images from that common part. We would leave most of the installations and common parts in the base image, then `FROM` this base image create our two variants with the differences related to the `webapp` and the proxy. 
 
 While this approach seems a bit *overkill* for our needs, it's definitely a good thing in bigger architectures where multiple servers have a lot of common properties, but that mean you have to rebuild every sub-image every time you make a change so be careful !
 
@@ -146,7 +148,7 @@ Then 4 files named `dockerps`, `inspectha`, `inspects1` and `inspects2` were cre
 
 ### Task 5: Generate a new load balancer configuration when membership changes
 
-We didn't find a `TODO: [CFG] Remove all the servers` comment in the haproxy.cfg file, but we commented the two servers declaration under the `backend nodes` category.
+We didn't find a `TODO: [CFG] Remove all the servers` comment in the `haproxy.cfg` file, but we commented the two servers declaration under the `backend nodes` category.
 
 ##### Deliverables
 
