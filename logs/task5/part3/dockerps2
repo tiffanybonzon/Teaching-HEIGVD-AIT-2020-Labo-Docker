@@ -1,0 +1,4 @@
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS                                  NAMES
+25424fc4b9c6        75400c3d9205        "/init"             2 hours ago         Up 2 hours                 3000/tcp, 7373/tcp, 7946/tcp           s2
+62f26d355aa2        75400c3d9205        "/init"             2 hours ago         Exited (0) 2 minutes ago                                          s1
+d95be236a732        fa4f27eb91da        "/init"             2 hours ago         Up 2 hours                 80/tcp, 1936/tcp, 7373/tcp, 7946/tcp   ha

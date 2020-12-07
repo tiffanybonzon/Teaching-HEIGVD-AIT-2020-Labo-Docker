@@ -142,11 +142,23 @@ While this approach seems a bit *overkill* for our needs, it's definitely a good
 
 Then 4 files named `dockerps`, `inspectha`, `inspects1` and `inspects2` were created with the additionnal logs required.
 
-4. We assume the problem you want us to refer is the one we described earlier about the fact that every time we write the file `/tmp/haproxy.cfg` it overrides its current content.
+4. We ass   ume the problem you want us to refer is the one we described earlier about the fact that every time we write the file `/tmp/haproxy.cfg` it overrides its current content.
 
 ### Task 5: Generate a new load balancer configuration when membership changes
 
 We didn't find a `TODO: [CFG] Remove all the servers` comment in the haproxy.cfg file, but we commented the two servers declaration under the `backend nodes` category.
+
+##### Deliverables
+
+1. The files are in the logs folder, named the same way as for the last step.
+
+2. The list is available in the file `lsoutput`.
+
+3. The files are `step3conf`, `2ndlsoutput` and `dockerps2`.
+
+4. We won't go into further details regarding another approach. We have however mentionned earlier in this report a few differences and taken the repeated example of Traefik, so that's the tool we would recommend with it's "labeling the containers" approach.
+
+### Task 6: Make the load balancer automatically reload the new configuration
 
 ### Difficulties
 
