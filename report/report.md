@@ -76,7 +76,7 @@ The logs at the end of the second task have been exported to the corresponding f
 We haven't faced the problem where we need to start `s1` and `s2` before starting `ha`, however it's obviously a big problem if you need to link the containers that way, future containers wouldn't be able to reach `ha` because of the same problem. The easier solution is to allow the containers to resolve ha.
 
 The way `Serf` works is with a `gossip protocol`, it's a way to design the communication that has his name issued from the analogy of workers spreading rumors, everyone periodically talks to someone else randomly and the information therefore spreads. There is another analogy that calls such a communication scheme an `epidemic protocol`, as a parallel can be made between the way the information spread and a virus would spread
-(source)[https://en.wikipedia.org/wiki/Gossip_protocol].
+[source](https://en.wikipedia.org/wiki/Gossip_protocol).
 
 One of the other way for the discovery to happen on Docker is the way used by `Traefik` (already used as an example earlier), `Traefik` discovery uses an access to the Docker API to detect running container and information on these containers to detect the services. In our case we would allow `ha` to use the Docker API and tell him that every container with a LABEL `backend` is a container running the `webapp`.
 
