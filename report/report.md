@@ -167,7 +167,7 @@ We didn't find a `TODO: [CFG] Remove all the servers` comment in the `haproxy.cf
 
     ![](img/task6_stats.png)
 
-2. We're overall pretty happy the final solution, mostly because it answers the issues we had detected in the preliminary task. We haven't used many other solutions or tried this one enough to fully create an preference but we're overall satisfied with the state of our project at the end of this task.
+2. Overall, we're pretty happy with the final solution, mostly because it answers the issues we had detected in the preliminary task. We haven't used many other solutions or tried this one enough to fully create a preference but we're  satisfied with the state of our project at the end of this task.
 
    On a personal note, I thought the alternative we used before (still `Traefik`) was more elegant in managing Docker containers through its direct access to Docker and its live detection of labels on containers. However the solution we implemented here isn't restricted to Docker and would work fine with virtual machines or even physical ones, which is a big plus.
 
