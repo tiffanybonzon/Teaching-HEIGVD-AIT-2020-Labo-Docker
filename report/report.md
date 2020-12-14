@@ -6,11 +6,11 @@ by Bonzon Tiffany, Scherer Laurent, Thoeny Laurent
 
 ### Introduction
 
+In this lab we'll use Docker and its containers to simulate an environment where we use a proxy to manage our back-end nodes. It follows the third lab that made us configure Ha proxy already.
+
 ### Table of contents
 
 [TOC]
-
-
 
 ### Task 0: Identify issues and install the tools
 
@@ -32,9 +32,8 @@ We'll typically prefer a pull solution in this case, we want our service to cont
 
 Alternatively we could consider implementing our new service on the load balancers, but we wouldn't recommend that since restarting one means restarting both services and it's better to separate the tasks.
 
-*[M6]* : todo
-
-
+*[M6]* : It's dynamic only when it starts and retrieve parameters from the containers to update the configuration file, it'll not support the addition of containers nor remove one that was stopped. 
+The solution is that we need to implement a system that allows our proxy to have a dynamic list of nodes, either through discovery (the proxy has a way to add new containers) or through node declaration (the starting back-end containers announce themselves).
 
 ### Task 1: Add a process supervisor to run several processes
 
@@ -162,9 +161,26 @@ We didn't find a `TODO: [CFG] Remove all the servers` comment in the `haproxy.cf
 
 ### Task 6: Make the load balancer automatically reload the new configuration
 
+##### Deliverables
 
+1. You can find the screenshot below and the `docker ps` output is available in the logs folder as usual.
+
+    ![](img/task6_stats.png)
+
+2. We're overall pretty happy the final solution, mostly because it answers the issues we had detected in the preliminary task. We haven't used many other solutions or tried this one enough to fully create an preference but we're overall satisfied with the state of our project at the end of this task.
+
+   On a personal note, I thought the alternative we used before (still `Traefik`) was more elegant in managing Docker containers through its direct access to Docker and its live detection of labels on containers. However the solution we implemented here isn't restricted to Docker and would work fine with virtual machines or even physical ones, which is a big plus.
+
+3. We made a live demo on the 09.12 and were granted the bonus =)
 
 ### Difficulties
 
+Since the lab was mostly a guided one, we haven't faced any specific difficulty through the process, we had to adapt a few commands parameters (paths mostly) but it went fine overall. 
+
 ### Conclusion
 
+The lab allowed us to explore other proxy configuration than the one we've seen on the lab 3, it was guided but still helped us understand different steps of automating the discovery through the different updates we made on the scripts along the tasks.
+
+Overall allowed us to play with containers and to see how a dynamic configuration can work with Ha proxy and what were the limits of different tricks we used in the early/middle tasks. 
+
+It also was our first time using a service such as `s6` and we discovered a new way of using multiples services on a single container using process supervisors.
