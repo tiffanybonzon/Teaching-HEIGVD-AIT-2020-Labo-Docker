@@ -4,8 +4,6 @@ by Bonzon Tiffany, Scherer Laurent, Thoeny Laurent
 
 ### Table of contents
 
-
-
 [TOC]
 
 ### Introduction
