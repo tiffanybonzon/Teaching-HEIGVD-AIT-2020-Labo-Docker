@@ -2,15 +2,15 @@
 
 by Bonzon Tiffany, Scherer Laurent, Thoeny Laurent
 
+### Table of contents
 
+
+
+[TOC]
 
 ### Introduction
 
 In this lab we'll use Docker and its containers to simulate an environment where we use a proxy to manage our back-end nodes. It follows the third lab that made us configure Ha proxy already.
-
-### Table of contents
-
-[TOC]
 
 ### Task 0: Identify issues and install the tools
 
